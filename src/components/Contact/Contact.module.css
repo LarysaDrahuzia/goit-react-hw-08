@@ -1,0 +1,17 @@
+.contact {
+  display: flex;
+  flex-direction: column;
+}
+
+.nameBox,
+.phoneBox {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.name,
+.phone {
+  margin-left: 10px;
+}
