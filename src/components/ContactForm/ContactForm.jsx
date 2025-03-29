@@ -27,7 +27,7 @@ const ContactForm = () => {
   };
   return (
     <Formik
-      initialValues={{ name: '', number: '', id: nanoid() }}
+      initialValues={{ name: '', number: '' }}
       validationSchema={UserSchema}
       onSubmit={handleSubmit}
     >

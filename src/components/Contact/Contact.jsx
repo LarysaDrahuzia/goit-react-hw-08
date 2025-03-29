@@ -7,11 +7,11 @@ const Contact = ({ name, number, icon }) => {
   return (
     <div className={css.contact}>
       <div className={css.nameBox}>
-        <IoMdPerson>{icon}</IoMdPerson>
+        <IoMdPerson color="#fff">{icon}</IoMdPerson>
         <span className={css.name}>{name}</span>
       </div>
       <div className={css.phoneBox}>
-        <HiPhone>{icon}</HiPhone>
+        <HiPhone color="#fff">{icon}</HiPhone>
         <span className={css.phone}>{number}</span>
       </div>
     </div>

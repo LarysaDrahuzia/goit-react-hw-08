@@ -4,7 +4,7 @@ import css from './SearchBox.module.css';
 
 const SearchBox = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(state => state.filters);
+  const filter = useSelector(state => state.filters.name);
 
   const handleChange = e => {
     const changeFilterAction = changeFilter(e.target.value);
