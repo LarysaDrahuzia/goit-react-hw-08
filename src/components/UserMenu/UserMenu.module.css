@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.username {
+  font-weight: 700;
+  color: #fff;
+}
+
+.btn {
+  color: #fff;
+  font-weight: 500;
+  padding: 8px;
+  border: 2px solid #fff;
+  border-radius: 8px;
+}
+
+btn:hover {
+  color: aqua;
+}
