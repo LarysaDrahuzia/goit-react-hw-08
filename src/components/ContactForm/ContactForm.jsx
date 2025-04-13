@@ -1,8 +1,8 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
-
-import { addContact } from '../../redux/contacts/operations';
+import { addContact, updateContact } from '../../redux/contacts/operations';
+import toast from 'react-hot-toast';
 import css from './ContactForm.module.css';
 
 const UserSchema = Yup.object().shape({
@@ -11,7 +11,7 @@ const UserSchema = Yup.object().shape({
     .max(50, 'Enter the number of characters from 3 to 50')
     .required('This field is required'),
   number: Yup.string()
-    .max(10, 'Incorrect phone number')
+    .max(18, 'Incorrect phone number')
     .required('This field is required'),
 });
 
@@ -21,8 +21,16 @@ const ContactForm = () => {
   const handleSubmit = (values, actions) => {
     // console.log('handleSubmit', values);
     dispatch(addContact(values));
+    toast.success(`Contact successfully added`, {
+      style: {
+        background: '#33f3ff',
+        color: '#070929',
+        fontWeight: 'bold',
+      },
+    });
     actions.resetForm();
   };
+
   return (
     <Formik
       initialValues={{ name: '', number: '' }}

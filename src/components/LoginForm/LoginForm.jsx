@@ -1,13 +1,25 @@
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { logIn } from '../../redux/auth/operations';
+import toast from 'react-hot-toast';
 import css from './LoginForm.module.css';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(logIn(values));
+    dispatch(logIn(values))
+      .unwrap()
+      .then(() =>
+        toast.success('Login success!', {
+          style: {
+            background: '#33f3ff',
+            color: '#070929',
+            fontWeight: 'bold',
+          },
+        })
+      );
+
     actions.resetForm();
   };
   return (

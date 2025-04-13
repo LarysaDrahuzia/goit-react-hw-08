@@ -31,11 +31,27 @@ export const logIn = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
-  try {
-    await axios.post('/users/logout');
-    clearAuthHeader();
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
-  }
+export const logOut = createAsyncThunk('auth/logout', async () => {
+  await axios.post('/users/logout');
+  setAuthHeader('');
 });
+
+export const refreshUser = createAsyncThunk(
+  'auth/current',
+  async (__dirname, thunkAPI) => {
+    try {
+      const reduxState = thunkAPI.getState();
+      setAuthHeader(reduxState.auth.token);
+      const { data } = await axios.get('/user/me');
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+  {
+    condition: (_, thunkAPI) => {
+      const reduxState = thunkAPI.getState();
+      return reduxState.auth.token !== null;
+    },
+  }
+);

@@ -10,3 +10,7 @@
 .link:hover {
   color: aqua;
 }
+
+.link.active {
+  color: aqua;
+}

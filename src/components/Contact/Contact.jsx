@@ -1,9 +1,9 @@
 import { IoMdPerson } from 'react-icons/io';
 import { HiPhone } from 'react-icons/hi2';
-
+import { AiOutlineEdit } from 'react-icons/ai';
 import css from './Contact.module.css';
 
-const Contact = ({ name, number, icon }) => {
+const Contact = ({ id, name, number, icon, onEdit }) => {
   return (
     <div className={css.contact}>
       <div className={css.nameBox}>
@@ -14,6 +14,9 @@ const Contact = ({ name, number, icon }) => {
         <HiPhone color="#fff">{icon}</HiPhone>
         <span className={css.phone}>{number}</span>
       </div>
+      <button className={css.editBtn} onClick={() => onEdit(id)}>
+        <AiOutlineEdit color="#fff" size={20} />
+      </button>
     </div>
   );
 };

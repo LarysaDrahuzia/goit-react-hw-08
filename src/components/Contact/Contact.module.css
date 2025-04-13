@@ -16,3 +16,17 @@
   margin-left: 10px;
   color: #fff;
 }
+
+.editBtn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px;
+  transition: background-color 0.3s;
+}
+
+.editBtn:hover {
+  background-color: #444;
+  border-radius: 4px;
+}

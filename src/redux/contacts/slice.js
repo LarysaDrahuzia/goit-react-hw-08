@@ -1,5 +1,10 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContact } from './operations';
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  updateContact,
+} from './operations';
 import { selectContacts } from './selectors';
 import { selectNameFilter } from '../filters/selectors';
 import { logOut } from '../auth/operations';
@@ -7,8 +12,10 @@ import { logOut } from '../auth/operations';
 export const selectVisibleContacts = createSelector(
   [selectContacts, selectNameFilter],
   (contacts, filter) => {
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+    return contacts.filter(
+      contact =>
+        contact.name.toLowerCase().includes(filter.toLowerCase()) ||
+        contact.number.includes(filter)
     );
   }
 );
@@ -19,6 +26,7 @@ const slice = createSlice({
     items: [],
     loading: false,
     error: null,
+    editingContact: null,
   },
   extraReducers: builder => {
     builder
@@ -64,8 +72,14 @@ const slice = createSlice({
       })
       .addCase(logOut.fulfilled, state => {
         state.items = [];
-        state.loading = false;
-        state.error = null;
+      })
+      .addCase(updateContact.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          contact => contact.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
       });
   },
 });
