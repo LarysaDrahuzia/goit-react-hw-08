@@ -28,6 +28,17 @@ const slice = createSlice({
     error: null,
     editingContact: null,
   },
+  reducers: {
+    setEditingContact: (state, action) => {
+      const contact = state.items.find(
+        contact => contact.id === action.payload
+      );
+      state.editingContact = contact;
+    },
+    clearEditingContact: (state, action) => {
+      state.editingContact = null;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, state => {
@@ -80,8 +91,10 @@ const slice = createSlice({
         if (index !== -1) {
           state.items[index] = action.payload;
         }
+        state.editingContact = null;
       });
   },
 });
 
+export const { setEditingContact, clearEditingContact } = slice.actions;
 export default slice.reducer;

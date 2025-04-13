@@ -1,9 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contacts/operations';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateContact } from '../../redux/contacts/operations';
 import toast from 'react-hot-toast';
-import css from './ContactForm.module.css';
+import css from './EditForm.module.css';
 
 const UserSchema = Yup.object().shape({
   name: Yup.string()
@@ -15,12 +15,21 @@ const UserSchema = Yup.object().shape({
     .required('This field is required'),
 });
 
-const ContactForm = () => {
+const EditForm = () => {
   const dispatch = useDispatch();
+  const editingContact = useSelector(state => state.contacts.editingContact);
 
   const handleSubmit = (values, actions) => {
-    dispatch(addContact(values));
-    toast.success(`Contact successfully added`, {
+    dispatch(
+      updateContact({
+        id: editingContact.id,
+        updatedData: {
+          name: values.name,
+          number: values.number,
+        },
+      })
+    );
+    toast.success(`Contact edited`, {
       style: {
         background: '#33f3ff',
         color: '#070929',
@@ -32,7 +41,11 @@ const ContactForm = () => {
 
   return (
     <Formik
-      initialValues={{ name: '', number: '' }}
+      enableReinitialize
+      initialValues={{
+        name: editingContact?.name || '',
+        number: editingContact?.number || '',
+      }}
       validationSchema={UserSchema}
       onSubmit={handleSubmit}
     >
@@ -48,11 +61,11 @@ const ContactForm = () => {
           <ErrorMessage className={css.error} name="number" component="span" />
         </div>
         <button className={css.button} type="submit">
-          Add contact
+          Save
         </button>
       </Form>
     </Formik>
   );
 };
 
-export default ContactForm;
+export default EditForm;

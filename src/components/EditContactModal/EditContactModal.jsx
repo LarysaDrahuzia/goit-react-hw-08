@@ -1,13 +1,23 @@
 import { Dialog, DialogTitle, DialogContent, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import ContactForm from '../ContactForm/ContactForm'; // існуючий компонент форми
-import { useSelector } from 'react-redux';
+import EditForm from '../EditForm/EditForm';
+import { clearEditingContact } from '../../redux/contacts/slice';
+import { useDispatch, useSelector } from 'react-redux';
 
-const EditContactModal = ({ open, onClose }) => {
-  const contact = useSelector(state => state.contacts.editingContact);
+const EditContactModal = () => {
+  const dispatch = useDispatch();
+  const editingContact = useSelector(state => state.contacts.editingContact);
+  const onClose = () => {
+    dispatch(clearEditingContact());
+  };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog
+      open={Boolean(editingContact)}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+    >
       <DialogTitle
         sx={{
           display: 'flex',
@@ -21,7 +31,7 @@ const EditContactModal = ({ open, onClose }) => {
         </IconButton>
       </DialogTitle>
       <DialogContent>
-        <ContactForm contactToEdit={contact} onClose={onClose} />
+        <EditForm />
       </DialogContent>
     </Dialog>
   );
