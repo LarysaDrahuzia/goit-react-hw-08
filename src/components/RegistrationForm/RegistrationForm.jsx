@@ -18,7 +18,12 @@ const RegistrationForm = () => {
       <Form className={css.form} autoComplete="off">
         <label className={css.label}>
           Name
-          <Field className={css.input} type="text" name="name" />
+          <Field
+            className={css.input}
+            type="text"
+            name="name"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          />
         </label>
         <label className={css.label}>
           Email
